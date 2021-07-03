@@ -1,16 +1,37 @@
 package com.deepakrohan.expense.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Document
+@Document(collection = "expense")
 public class ExpenseItem {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Id
+    private String id;
     private String expenseInBrief;
     private String expenseDescription;
     private LocalDateTime expenseDateTime;
     private BigDecimal amountSpent;
+    private String categoryId;
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
 
     public ExpenseItem() { }
 
