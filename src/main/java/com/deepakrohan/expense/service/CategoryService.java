@@ -20,7 +20,8 @@ public class CategoryService {
         Category category1 = new Category();
         category1.setExpenseCat(category.getCategory());
         category1.setExpenseCatDesc(category.getCategoryDesc());
-        category1.setTimeCreated(LocalDateTime.now());
+        category1.setTimeCategoryCreated(LocalDateTime.now());
+        category1.setAmtCategoryAlloted(category.getLimit());
          categoryRepository.save(category1);
         return category1;
     }
