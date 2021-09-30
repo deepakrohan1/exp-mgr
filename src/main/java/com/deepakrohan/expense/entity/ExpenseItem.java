@@ -1,12 +1,10 @@
 package com.deepakrohan.expense.entity;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Document(collection = "expense")
 public class ExpenseItem {
     public String getId() {
         return id;

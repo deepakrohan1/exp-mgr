@@ -21,11 +21,7 @@ public class CategoryService {
         category1.setExpenseCat(category.getCategory());
         category1.setExpenseCatDesc(category.getCategoryDesc());
         category1.setTimeCreated(LocalDateTime.now());
-        return categoryRepository.save(category1);
-//        return category;
+        return category1;
     }
 
-    public List<Category> findAllCategories() {
-        return categoryRepository.findAll();
-    }
 }

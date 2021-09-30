@@ -42,9 +42,9 @@ public class CategoryController {
      * Get all the expense related to a user
      * @return
      * TODO Add user details
-     */
-    @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getCategories() {
-        return  ResponseEntity.ok(categoryService.findAllCategories());
-    }
+//     */
+//    @GetMapping("/categories")
+//    public ResponseEntity<List<Category>> getCategories() {
+//        return  ResponseEntity.ok(categoryService.findAllCategories());
+//    }
 }

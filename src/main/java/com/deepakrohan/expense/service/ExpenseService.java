@@ -15,21 +15,21 @@ public class ExpenseService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
-    public List<ExpenseItem> findAllExpenses() {
-        return expenseRepository.findAll();
-    }
+//    public List<ExpenseItem> findAllExpenses() {
+//        return expenseRepository.findAll();
+//    }
 
-    public ExpenseItem saveReq(ExpenseDto expenseDto) {
-        ExpenseItem expenseItem = new ExpenseItem();
-        expenseItem.setExpenseInBrief(expenseDto.getExpenseName());
-        expenseItem.setExpenseDescription(expenseDto.getExpenseDesc());
-        expenseItem.setAmountSpent(expenseDto.getAmountSpent());
-        expenseItem.setCategoryId(expenseDto.getCategoryId());
-        expenseItem.setExpenseDateTime(LocalDateTime.now());
-        return expenseRepository.save(expenseItem);
-    }
+//    public ExpenseItem saveReq(ExpenseDto expenseDto) {
+//        ExpenseItem expenseItem = new ExpenseItem();
+//        expenseItem.setExpenseInBrief(expenseDto.getExpenseName());
+//        expenseItem.setExpenseDescription(expenseDto.getExpenseDesc());
+//        expenseItem.setAmountSpent(expenseDto.getAmountSpent());
+//        expenseItem.setCategoryId(expenseDto.getCategoryId());
+//        expenseItem.setExpenseDateTime(LocalDateTime.now());
+//        return expenseRepository.save(expenseItem);
+//    }
 
-    public List<ExpenseItem> findAllExpensesById(String categoryId) {
-        return expenseRepository.findByCategoryId(categoryId);
-    }
+//    public List<ExpenseItem> findAllExpensesById(String categoryId) {
+//        return expenseRepository.findByCategoryId(categoryId);
+//    }
 }
