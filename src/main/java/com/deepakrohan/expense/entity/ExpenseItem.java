@@ -1,74 +1,31 @@
 package com.deepakrohan.expense.entity;
 
-import org.springframework.data.annotation.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class ExpenseItem {
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@ToString
+@Builder
+public class ExpenseItem extends AuditFields {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String expenseInBrief;
     private String expenseDescription;
     private LocalDateTime expenseDateTime;
     private BigDecimal amountSpent;
     private String categoryId;
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
-
-    public ExpenseItem() { }
-
-    public ExpenseItem(String expenseInBrief, String expenseDescription, LocalDateTime expenseDateTime, BigDecimal amountSpent) {
-        this.expenseInBrief = expenseInBrief;
-        this.expenseDescription = expenseDescription;
-        this.expenseDateTime = expenseDateTime;
-        this.amountSpent = amountSpent;
-    }
-
-    public String getExpenseInBrief() {
-        return expenseInBrief;
-    }
-
-    public void setExpenseInBrief(String expenseInBrief) {
-        this.expenseInBrief = expenseInBrief;
-    }
-
-    public String getExpenseDescription() {
-        return expenseDescription;
-    }
-
-    public void setExpenseDescription(String expenseDescription) {
-        this.expenseDescription = expenseDescription;
-    }
-
-    public LocalDateTime getExpenseDateTime() {
-        return expenseDateTime;
-    }
-
-    public void setExpenseDateTime(LocalDateTime expenseDateTime) {
-        this.expenseDateTime = expenseDateTime;
-    }
-
-    public BigDecimal getAmountSpent() {
-        return amountSpent;
-    }
-
-    public void setAmountSpent(BigDecimal amountSpent) {
-        this.amountSpent = amountSpent;
-    }
 }

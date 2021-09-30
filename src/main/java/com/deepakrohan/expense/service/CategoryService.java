@@ -21,6 +21,7 @@ public class CategoryService {
         category1.setExpenseCat(category.getCategory());
         category1.setExpenseCatDesc(category.getCategoryDesc());
         category1.setTimeCreated(LocalDateTime.now());
+         categoryRepository.save(category1);
         return category1;
     }
 

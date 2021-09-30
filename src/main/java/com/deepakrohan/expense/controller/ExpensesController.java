@@ -1,6 +1,7 @@
 package com.deepakrohan.expense.controller;
 
 import com.deepakrohan.expense.dto.ExpenseDto;
+import com.deepakrohan.expense.entity.Category;
 import com.deepakrohan.expense.entity.ExpenseItem;
 import com.deepakrohan.expense.service.ExpenseService;
 import org.slf4j.Logger;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/api")
 public class ExpensesController {
     public  static Logger LOG = LoggerFactory.getLogger(ExpensesController.class);
 
@@ -26,6 +28,13 @@ public class ExpensesController {
     private ExpenseService expenseService;
 
     public static final String EXPENSES = "/expenses";
+
+    @GetMapping(EXPENSES)
+    public ResponseEntity<Category> getCategory() {
+        List<Category> categories = new ArrayList<Category>();
+        categories.add(Category.builder().expenseCat("Health").build());
+        return new ResponseEntity(categories, HttpStatus.OK);
+    }
 
 //    @GetMapping(EXPENSES)
 //    public ResponseEntity getAllExpenses() {
@@ -41,10 +50,10 @@ public class ExpensesController {
 //        return ResponseEntity.ok(expenseItem);
 //    }
 
-//    @PostMapping(EXPENSES)
-//    public ResponseEntity saveExpenses(@RequestBody ExpenseDto expenseDto) {
-//        LOG.info("Post req for Save");
-//        ExpenseItem expenseItem = expenseService.saveReq(expenseDto);
-//        return  ResponseEntity.status(HttpStatus.CREATED).body(expenseItem);
-//    }
+    @PostMapping(EXPENSES)
+    public ResponseEntity saveExpenses(@RequestBody ExpenseDto expenseDto) {
+        LOG.info("Post req for Save");
+        ExpenseItem expenseItem = expenseService.saveReq(expenseDto);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(expenseItem);
+    }
 }
