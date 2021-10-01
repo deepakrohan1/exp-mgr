@@ -30,7 +30,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<CategoryDto>> getAllCategories() {
 //        TODO this logic has to be updated per user
         log.info("Get All Categories...");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryService.findAllCategories());

@@ -25,8 +25,8 @@ public class CategoryService {
         return categoryMapper.categoryToCategoryDto(category);
     }
 
-    public List<Category> findAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDto> findAllCategories() {
+        return categoryMapper.categoryListToCategoryDto(categoryRepository.findAll());
     }
 
     public void deleteCategoryById(Long categoryId) {
