@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 @RestController
 @RequestMapping("/api")
@@ -55,9 +56,14 @@ public class CategoryController {
      */
     @DeleteMapping("/categories/{categoryId}")
     public ResponseEntity deleteCategory(@PathVariable("categoryId") Long categoryId ) {
-        log.info("Deleteing category with id {}", categoryId);
-        categoryService.deleteCategoryById(categoryId);
-        return (ResponseEntity) ResponseEntity.status(HttpStatus.NO_CONTENT);
+        log.info("Deleting category with id {}", categoryId);
+        try {
+            categoryService.deleteCategoryById(categoryId);
+        } catch (DataFormatException e) {
+            log.error("error in processing delete for categoryId{} No category found {}", categoryId, e);
+            return  new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 
