@@ -5,7 +5,6 @@ import com.deepakrohan.expense.entity.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -14,15 +13,18 @@ public interface CategoryMapper {
     @Mapping(source = "category", target = "expenseCat")
     @Mapping(source = "categoryDesc", target = "expenseCatDesc")
     @Mapping(source = "amount", target = "amtCategoryAlloted")
-    Category categoryDtoCategory(CategoryDto categoryDto);
+    @Mapping(source = "dateAdded", target = "timeCategoryCreated")
+    Category categoryDtoToCategory(CategoryDto categoryDto);
 
-    @Mapping(source = "expenseCat", target = "category")
-    @Mapping(source = "expenseCatDesc", target = "categoryDesc")
-    @Mapping(source = "amtCategoryAlloted", target = "amount")
+    @Mapping(source = "category.expenseCat", target = "category")
+    @Mapping(source = "category.expenseCatDesc", target = "categoryDesc")
+    @Mapping(source = "category.amtCategoryAlloted", target = "amount")
+    @Mapping(source = "category.timeCategoryCreated", target = "dateAdded", dateFormat = "yyyy-MM-dd")
     List<CategoryDto> categoryListToCategoryDto(List<Category> categoriesList);
 
-    @Mapping(source = "expenseCat", target = "category")
-    @Mapping(source = "expenseCatDesc", target = "categoryDesc")
-    @Mapping(source = "amtCategoryAlloted", target = "amount")
+    @Mapping(source = "category.expenseCat", target = "category")
+    @Mapping(source = "category.expenseCatDesc", target = "categoryDesc")
+    @Mapping(source = "category.amtCategoryAlloted", target = "amount")
+    @Mapping(source = "category.timeCategoryCreated", target = "dateAdded", dateFormat = "yyyy-MM-dd")
     CategoryDto categoryToCategoryDto(Category category);
 }
