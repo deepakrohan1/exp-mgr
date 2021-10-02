@@ -41,7 +41,9 @@ public class Category implements Serializable {
     private String expenseCat;
     @Column(name = "category_description")
     private String expenseCatDesc;
-    @Column(name = "category_added")
+
+    @CreationTimestamp
+    @Column(name = "category_added", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime timeCategoryCreated;
     @Column(name = "category_limit")
     private BigDecimal amtCategoryAlloted;
