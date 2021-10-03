@@ -1,23 +1,23 @@
 package com.deepakrohan.expense.controller;
 
+import java.util.List;
+
 import com.deepakrohan.expense.dto.ExpenseDto;
-import com.deepakrohan.expense.entity.Category;
-import com.deepakrohan.expense.entity.ExpenseItem;
 import com.deepakrohan.expense.service.ExpenseService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -30,30 +30,45 @@ public class ExpensesController {
     public static final String EXPENSES = "/expenses";
 
     @GetMapping(EXPENSES)
-    public ResponseEntity<Category> getCategory() {
-        List<Category> categories = new ArrayList<Category>();
-        categories.add(Category.builder().expenseCat("Health").build());
-        return new ResponseEntity(categories, HttpStatus.OK);
+    public ResponseEntity<List<ExpenseDto>> getExpenses() {
+        LOG.info("Get all expenses");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(expenseService.findAllExpenses());
     }
 
-//    @GetMapping(EXPENSES)
-//    public ResponseEntity getAllExpenses() {
-//        LOG.info("Get Expenses Req");
-//        List<ExpenseItem> expenseItem = expenseService.findAllExpenses();
-//        return ResponseEntity.ok(expenseItem);
-//    }
-
-//    @GetMapping(EXPENSES + "/{categoryId}")
-//    public ResponseEntity getExpensesByCatId(@PathVariable("categoryId") String categoryId) {
-//        LOG.info("Get Expenses by Id");
-//        List<ExpenseItem> expenseItem = expenseService.findAllExpensesById(categoryId);
-//        return ResponseEntity.ok(expenseItem);
-//    }
-
+    /**
+     * A place to put expenses into
+     * @param expenseDto
+     * @return expenseDto
+     */
     @PostMapping(EXPENSES)
-    public ResponseEntity saveExpenses(@RequestBody ExpenseDto expenseDto) {
-        LOG.info("Post req for Save");
-        ExpenseItem expenseItem = expenseService.saveReq(expenseDto);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(expenseItem);
+    public ResponseEntity<ExpenseDto> saveExpense(@RequestBody ExpenseDto expenseDto) {
+        LOG.info("Post expense for save {}", expenseDto);
+        ExpenseDto expenses = expenseService.saveExpense(expenseDto);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(expenses);
+    }
+
+    /**
+     * Handle Delete of an expense
+     * @param expenseId
+     * @return
+     */
+    @DeleteMapping(EXPENSES + "/{expenseId}")
+    public ResponseEntity deleteExpense(@PathVariable("expenseId") Long categoryId ) {
+        //  Fill in with service code
+        return (ResponseEntity) ResponseEntity.status(HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * Update expense Id
+     * @param expenseId
+     * @param expenseDto
+     * @return
+     */
+    @PutMapping(EXPENSES + "/{expenseId}")
+    public ResponseEntity<ExpenseDto> putExpense(@PathVariable("expenseId") Long expenseId,
+                                                @RequestBody ExpenseDto expenseDto) {
+         //  Fill in with service code
+        return null;
+
     }
 }
