@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
@@ -37,13 +38,19 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryService.findAllCategories());
     }
 
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable("id") Long id) {
+//        TODO this logic has to be updated per user
+        log.info("Get All Categories...");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryService.findByCategoryId(id));
+    }
     /**
      * A place to put expenses into
      * @param category
      * @return
      */
     @PostMapping("/categories")
-    public ResponseEntity<CategoryDto> saveCategory(@RequestBody CategoryDto category) {
+    public ResponseEntity<CategoryDto> saveCategory(@Valid @RequestBody CategoryDto category) {
         log.info("Save Request {}", category.toString());
         CategoryDto cat = categoryService.save(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(cat);

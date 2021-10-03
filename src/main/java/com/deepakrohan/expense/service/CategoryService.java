@@ -2,6 +2,7 @@ package com.deepakrohan.expense.service;
 
 import com.deepakrohan.expense.dto.CategoryDto;
 import com.deepakrohan.expense.entity.Category;
+import com.deepakrohan.expense.exception.CategoryNotFoundException;
 import com.deepakrohan.expense.mapper.CategoryMapper;
 import com.deepakrohan.expense.repo.CategoryRepository;
 import org.mapstruct.factory.Mappers;
@@ -39,5 +40,13 @@ public class CategoryService {
     public Category updateCategoryById(Long categoryId, CategoryDto categoryDto) {
 //        Cate
         return null;
+    }
+
+    public CategoryDto findByCategoryId(Long id) {
+        Category category = categoryRepository
+                .findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " +id));
+
+        return categoryMapper.categoryToCategoryDto(category);
     }
 }
