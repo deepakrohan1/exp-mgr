@@ -32,8 +32,6 @@ public class Expense extends AuditFields {
     private String expenseInBrief;
     @Column(name = "expense_description")
     private String expenseDescription;
-    @Column(name = "expense_id")
-    private LocalDateTime expenseDateTime;
     @Column(name = "amount_spent")
     private BigDecimal amountSpent;
     @Column(name = "lx_image_url")
