@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import javax.servlet.annotation.WebServlet;
@@ -20,18 +21,19 @@ public class ExpenseManagerApplication {
 		return registration;
 	}
 
-	@Bean
-	public ResourceBundleMessageSource bundleMessageSource() {
-		ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
-		bundleMessageSource.setBasename("messages");
-		return bundleMessageSource;
-	}
+	// TODO New property added spring.messages.basename=messages
+//	@Bean
+//	public ResourceBundleMessageSource bundleMessageSource() {
+//		ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
+//		bundleMessageSource.setBasename("messages");
+//		return bundleMessageSource;
+//	}
 
 	@Bean
-	public SessionLocaleResolver localeResolver() {
-		SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-		sessionLocaleResolver.setDefaultLocale(Locale.US);
-		return sessionLocaleResolver;
+	public AcceptHeaderLocaleResolver localeResolver() {
+		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+		localeResolver.setDefaultLocale(Locale.US);
+		return localeResolver;
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(ExpenseManagerApplication.class, args);

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,8 +38,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/hello")
-    public String getMessage(@RequestHeader(name = "Accept-Language", required = false) Locale locale) {
-        return messageSource.getMessage("morning.message", null, locale);
+    public String getMessage() {
+        return messageSource.getMessage("morning.message", null, LocaleContextHolder.getLocale());
     }
 
     @GetMapping("/categories")
