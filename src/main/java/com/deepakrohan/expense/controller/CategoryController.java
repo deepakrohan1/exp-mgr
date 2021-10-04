@@ -3,6 +3,9 @@ package com.deepakrohan.expense.controller;
 import com.deepakrohan.expense.dto.CategoryDto;
 import com.deepakrohan.expense.entity.Category;
 import com.deepakrohan.expense.service.CategoryService;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.DataFormatException;
@@ -96,6 +101,26 @@ public class CategoryController {
                                                 @RequestBody CategoryDto categoryDto) {
         categoryService.updateCategoryById(categoryId, categoryDto);
         return null;
+
+    }
+
+    @GetMapping("/some")
+    public CategoryDto getCategories() {
+        CategoryDto categoryDto = CategoryDto
+                .builder()
+                .amount(BigDecimal.ONE)
+                .category("Health")
+                .categoryDesc("Exp for health")
+                .build();
+
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("amount", "category");
+
+        FilterProvider filters = new SimpleFilterProvider().addFilter("CategoryBeanFilter", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(categoryDto);
+        mapping.setFilters(filters);
+
+        return categoryDto;
 
     }
 
