@@ -1,6 +1,8 @@
 package com.deepakrohan.expense.dto;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +12,7 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@ApiModel("To Handle Category requests sent by API")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,6 +20,7 @@ import java.time.LocalDateTime;
 public class CategoryDto implements Comparable<CategoryDto> {
 
     @Size(min = 3, message = "Should be at least 3 characters")
+    @ApiModelProperty(notes = "this should have atleast 3 characters")
     private String category;
     private String categoryDesc;
     private BigDecimal amount;
