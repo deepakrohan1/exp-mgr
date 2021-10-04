@@ -16,6 +16,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'mysql:mysql-connector-java:8.0.23'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
 	annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
