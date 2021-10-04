@@ -1,6 +1,7 @@
 package com.deepakrohan.expense.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Builder
+@JsonIgnoreProperties(value = {"dateAdded"})
 public class CategoryDto implements Comparable<CategoryDto> {
 
     @Size(min = 3, message = "Should be at least 3 characters")
