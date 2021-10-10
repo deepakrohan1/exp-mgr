@@ -13,7 +13,7 @@ import org.springframework.jms.support.converter.MessageType;
 
 @Configuration
 public class JmsMessageConverter {
-    public static final String MESSAGE_QUEUE_NAME = "my-queue";
+    public static final String MESSAGE_QUEUE_NAME = "my-exp-notification";
 
     /**
      * A bean to manage the message converter. We are transmitting the message as type
@@ -25,6 +25,7 @@ public class JmsMessageConverter {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
         converter.setTypeIdPropertyName("_type");
+//        converter.setObjectMapper(mapper);
         return converter;
     }
 }

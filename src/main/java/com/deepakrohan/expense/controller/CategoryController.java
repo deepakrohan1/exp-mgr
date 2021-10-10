@@ -2,14 +2,13 @@ package com.deepakrohan.expense.controller;
 
 import com.deepakrohan.expense.dto.CategoryDto;
 import com.deepakrohan.expense.entity.Category;
+import com.deepakrohan.events.ExceededCostNotificationEvent;
 import com.deepakrohan.expense.service.CategoryService;
+import com.deepakrohan.expense.service.ExceededAmountNotificationService;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -21,14 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale;
+import java.util.UUID;
 import java.util.zip.DataFormatException;
 
 @RestController
@@ -36,14 +34,25 @@ import java.util.zip.DataFormatException;
 @Slf4j
 public class CategoryController {
 
-    @Autowired
     private MessageSource messageSource;
-
-    @Autowired
     private CategoryService categoryService;
+    private ExceededAmountNotificationService exceededAmountNotificationService;
+
+    public CategoryController(MessageSource messageSource, CategoryService categoryService, ExceededAmountNotificationService exceededAmountNotificationService) {
+        this.messageSource = messageSource;
+        this.categoryService = categoryService;
+        this.exceededAmountNotificationService = exceededAmountNotificationService;
+    }
 
     @GetMapping("/hello")
     public String getMessage() {
+        log.info("Triggering the getMessage API");
+        exceededAmountNotificationService.triggerNotification(ExceededCostNotificationEvent.builder()
+        .messageContent("hello")
+        .email("dfdf@gmail")
+        .amount(BigDecimal.ONE)
+                .id(UUID.randomUUID())
+        .build());
         return messageSource.getMessage("morning.message", null, LocaleContextHolder.getLocale());
     }
 
