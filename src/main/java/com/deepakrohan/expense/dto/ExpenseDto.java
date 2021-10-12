@@ -1,21 +1,21 @@
 package com.deepakrohan.expense.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class ExpenseDto {
+public class ExpenseDto implements Serializable {
     @NotNull
     private Long expId;
     private String expenseInBrief;

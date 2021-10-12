@@ -4,7 +4,7 @@ import com.deepakrohan.expense.dto.ExpenseDto;
 import com.deepakrohan.expense.entity.Expense;
 import com.deepakrohan.expense.mapper.ExpenseMapper;
 import com.deepakrohan.expense.repo.ExpenseRepository;
-
+import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.zip.DataFormatException;
 
 @Service
+@Slf4j
 public class ExpenseService {
 
     private ExpenseMapper expenseMapper = Mappers.getMapper(ExpenseMapper.class);
@@ -23,6 +24,7 @@ public class ExpenseService {
 
     @Cacheable(value = "itemCache")
     public List<ExpenseDto> findAllExpenses() {
+        log.info("Getting all expenses...");
         List<ExpenseDto> expenses = expenseMapper.expensesListToExpenseDto(expenseRepository.findAll());
         return expenses;
     }
