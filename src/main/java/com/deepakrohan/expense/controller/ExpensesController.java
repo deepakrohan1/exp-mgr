@@ -1,6 +1,9 @@
 package com.deepakrohan.expense.controller;
 
 import java.util.List;
+import java.util.zip.DataFormatException;
+
+import javax.validation.Valid;
 
 import com.deepakrohan.expense.dto.ExpenseDto;
 import com.deepakrohan.expense.service.ExpenseService;
@@ -53,9 +56,16 @@ public class ExpensesController {
      * @return
      */
     @DeleteMapping(EXPENSES + "/{expenseId}")
-    public ResponseEntity deleteExpense(@PathVariable("expenseId") Long categoryId ) {
-        //  Fill in with service code
-        return (ResponseEntity) ResponseEntity.status(HttpStatus.NO_CONTENT);
+    public ResponseEntity deleteExpense(@PathVariable("expenseId") Long expenseId ) {
+        LOG.info("Deleting expense with id {}", expenseId);
+        try {
+            expenseService.deleteExpense(expenseId);
+        } catch (DataFormatException e) {
+            LOG.error("Error deleting expense with id {}", expenseId, e);
+            return  new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        return (ResponseEntity) ResponseEntity.status(HttpStatus.OK);
     }
 
     /**
@@ -65,10 +75,9 @@ public class ExpensesController {
      * @return
      */
     @PutMapping(EXPENSES + "/{expenseId}")
-    public ResponseEntity<ExpenseDto> putExpense(@PathVariable("expenseId") Long expenseId,
-                                                @RequestBody ExpenseDto expenseDto) {
-         //  Fill in with service code
-        return null;
-
+    public ResponseEntity<ExpenseDto> putExpense(@RequestBody @Valid ExpenseDto expenseDto) {
+        LOG.info("Updating expense as {}", expenseDto);
+        ExpenseDto expenses = expenseService.updateExpense(expenseDto);
+        return ResponseEntity.status(HttpStatus.OK).body(expenses);
     }
 }

@@ -7,9 +7,11 @@ import com.deepakrohan.expense.repo.ExpenseRepository;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 @Service
 public class ExpenseService {
@@ -19,6 +21,7 @@ public class ExpenseService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    @Cacheable(value = "itemCache")
     public List<ExpenseDto> findAllExpenses() {
         List<ExpenseDto> expenses = expenseMapper.expensesListToExpenseDto(expenseRepository.findAll());
         return expenses;
@@ -29,4 +32,14 @@ public class ExpenseService {
         return expenseMapper.expenseToExpenseDto(expense);
     }
 
+    public void deleteExpense(Long expenseId) throws DataFormatException {
+        Expense expense = expenseRepository.findById(expenseId).orElseThrow(DataFormatException::new);
+        expenseRepository.delete(expense);
+    }
+
+    public ExpenseDto updateExpense(ExpenseDto expenseDto) {
+        Expense expense = expenseMapper.expenseDtoToExpense(expenseDto);
+        expense = expenseRepository.save(expense);
+        return expenseMapper.expenseToExpenseDto(expense);
+    }
 }
