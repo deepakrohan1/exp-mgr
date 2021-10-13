@@ -14,13 +14,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -58,6 +59,10 @@ public class Category implements Serializable {
     public String userCreated;
     @Column(name = "updated_by")
     public String dateCreated;
+
+    @OneToMany()
+    @JoinColumn(name = "category_id")
+    private List<Expense> expenses;
 
 }
 
