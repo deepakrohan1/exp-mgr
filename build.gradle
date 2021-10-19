@@ -23,6 +23,8 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
 	implementation 'org.springframework.data:spring-data-rest-hal-browser:3.3.5.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-aws-dependencies:2.2.2.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-aws-messaging:2.2.6.RELEASE'
 
 
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'

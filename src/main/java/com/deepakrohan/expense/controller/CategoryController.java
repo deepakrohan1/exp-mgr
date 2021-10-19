@@ -1,8 +1,8 @@
 package com.deepakrohan.expense.controller;
 
+import com.deepakrohan.events.ExceededCostNotificationEvent;
 import com.deepakrohan.expense.dto.CategoryDto;
 import com.deepakrohan.expense.entity.Category;
-import com.deepakrohan.events.ExceededCostNotificationEvent;
 import com.deepakrohan.expense.service.CategoryService;
 import com.deepakrohan.expense.service.ExceededAmountNotificationService;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,10 +23,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.deepakrohan.expense.messaging.SQSProducerService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.zip.DataFormatException;
 
@@ -37,22 +41,26 @@ public class CategoryController {
     private MessageSource messageSource;
     private CategoryService categoryService;
     private ExceededAmountNotificationService exceededAmountNotificationService;
+    private SQSProducerService sqsProducerService;
 
-    public CategoryController(MessageSource messageSource, CategoryService categoryService, ExceededAmountNotificationService exceededAmountNotificationService) {
+    public CategoryController(MessageSource messageSource,
+                              CategoryService categoryService,
+                              ExceededAmountNotificationService exceededAmountNotificationService,
+                              SQSProducerService sqsProducerService) {
         this.messageSource = messageSource;
         this.categoryService = categoryService;
         this.exceededAmountNotificationService = exceededAmountNotificationService;
+        this.sqsProducerService = sqsProducerService;
     }
 
     @GetMapping("/hello")
     public String getMessage() {
         log.info("Triggering the getMessage API");
-        exceededAmountNotificationService.triggerNotification(ExceededCostNotificationEvent.builder()
-        .messageContent("hello")
-        .email("dfdf@gmail")
-        .amount(BigDecimal.ONE)
-                .id(UUID.randomUUID())
-        .build());
+        Map<String, Object> headers = new HashMap<>();
+        headers.put("Message-Type", "some");
+        headers.put("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+        sqsProducerService.send("Hello", headers);
+
         return messageSource.getMessage("morning.message", null, LocaleContextHolder.getLocale());
     }
 

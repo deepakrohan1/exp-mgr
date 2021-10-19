@@ -1,1 +1,3 @@
 rootProject.name = 'expense-manager'
+include 'exp-mgr-gw'
+
