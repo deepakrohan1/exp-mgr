@@ -1,8 +1,8 @@
 package com.deepakrohan.expense.controller;
 
-import com.deepakrohan.events.ExceededCostNotificationEvent;
 import com.deepakrohan.expense.dto.CategoryDto;
 import com.deepakrohan.expense.entity.Category;
+import com.deepakrohan.expense.messaging.SQSProducerService;
 import com.deepakrohan.expense.service.CategoryService;
 import com.deepakrohan.expense.service.ExceededAmountNotificationService;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -23,14 +23,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.deepakrohan.expense.messaging.SQSProducerService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.zip.DataFormatException;
 
 @RestController

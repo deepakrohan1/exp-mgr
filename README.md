@@ -72,3 +72,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 ```
 
+## Flyway 
+A base flyway script to is used to handle the data migrations refer to the below repository for more
+instructions
+[Flyway Repo](https://github.com/deepakrohan1/expense-manager-flyway-to)
+
