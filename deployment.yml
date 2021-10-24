@@ -6,7 +6,12 @@ metadata:
     app: apache
     name: webserver
 spec:
-  replicas: 2
+  replicas: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 8
   selector: 
     matchLabels:
       app: apache
@@ -21,3 +26,11 @@ spec:
           image: httpd
           ports: 
             - containerPort: 80
+          volumeMounts: 
+            - name: demovol
+              mountPath: /data
+      volumes: 
+        - name: demovol
+          hostPath:
+            path: /data
+            type: Directory
