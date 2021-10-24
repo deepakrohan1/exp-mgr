@@ -1,0 +1,14 @@
+# kind kubernetes pod
+kind: Pod
+apiVersion: v1
+metadata:
+  name: exp-mgr
+  labels:
+    app: exp-mgr
+    release: stable
+spec:
+  containers: 
+    - name: db
+      image: redis
+    - name: web
+      image: httpd
