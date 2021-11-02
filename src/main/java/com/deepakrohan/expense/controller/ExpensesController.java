@@ -1,13 +1,8 @@
 package com.deepakrohan.expense.controller;
 
-import java.util.List;
-import java.util.zip.DataFormatException;
-
-import javax.validation.Valid;
-
 import com.deepakrohan.expense.dto.ExpenseDto;
+import com.deepakrohan.expense.dto.ExpenseResponseTotal;
 import com.deepakrohan.expense.service.ExpenseService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import java.util.zip.DataFormatException;
+
 @RestController
 @RequestMapping("/api")
 public class ExpensesController {
@@ -33,7 +31,7 @@ public class ExpensesController {
     public static final String EXPENSES = "/expenses";
 
     @GetMapping(EXPENSES)
-    public ResponseEntity<List<ExpenseDto>> getExpenses() {
+    public ResponseEntity<ExpenseResponseTotal> getExpenses() {
         LOG.info("Get all expenses");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(expenseService.findAllExpenses());
     }
