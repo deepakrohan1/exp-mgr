@@ -61,7 +61,7 @@ public class Category implements Serializable {
     public String dateCreated;
 
     @OneToMany(mappedBy = "category")
-    private List<Expense> expenses = new ArrayList<Expense>();
+    private List<Expense> expenses = new ArrayList<>();
 
 }
 

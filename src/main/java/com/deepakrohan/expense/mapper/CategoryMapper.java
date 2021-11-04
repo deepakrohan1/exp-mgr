@@ -14,17 +14,20 @@ public interface CategoryMapper {
     @Mapping(source = "categoryDesc", target = "expenseCatDesc")
     @Mapping(source = "amount", target = "amtCategoryAlloted")
     @Mapping(source = "dateAdded", target = "timeCategoryCreated")
+    @Mapping(target = "expenses", ignore = true)
     Category categoryDtoToCategory(CategoryDto categoryDto);
 
     @Mapping(source = "category.expenseCat", target = "category")
     @Mapping(source = "category.expenseCatDesc", target = "categoryDesc")
     @Mapping(source = "category.amtCategoryAlloted", target = "amount")
     @Mapping(source = "category.timeCategoryCreated", target = "dateAdded", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "expenses", ignore = true)
     List<CategoryDto> categoryListToCategoryDto(List<Category> categoriesList);
 
     @Mapping(source = "category.expenseCat", target = "category")
     @Mapping(source = "category.expenseCatDesc", target = "categoryDesc")
     @Mapping(source = "category.amtCategoryAlloted", target = "amount")
     @Mapping(source = "category.timeCategoryCreated", target = "dateAdded", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "expenses", ignore = true)
     CategoryDto categoryToCategoryDto(Category category);
 }

@@ -1,7 +1,6 @@
 package com.deepakrohan.expense.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @ApiModel("To Handle Category requests sent by API")
 @AllArgsConstructor
@@ -29,6 +27,7 @@ public class CategoryDto implements Comparable<CategoryDto> {
     private String categoryDesc;
     private BigDecimal amount;
     private String dateAdded;
+    private ExpenseResponseTotal expenses;
 
     @Override
     public int compareTo(CategoryDto o) {

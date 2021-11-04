@@ -2,7 +2,6 @@ package com.deepakrohan.expense.controller;
 
 import com.deepakrohan.expense.dto.CategoryDto;
 import com.deepakrohan.expense.entity.Category;
-import com.deepakrohan.expense.messaging.SQSProducerService;
 import com.deepakrohan.expense.service.CategoryService;
 import com.deepakrohan.expense.service.ExceededAmountNotificationService;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -39,16 +38,17 @@ public class CategoryController {
     private MessageSource messageSource;
     private CategoryService categoryService;
     private ExceededAmountNotificationService exceededAmountNotificationService;
-    private SQSProducerService sqsProducerService;
+//    private SQSProducerService sqsProducerService;
 
     public CategoryController(MessageSource messageSource,
                               CategoryService categoryService,
-                              ExceededAmountNotificationService exceededAmountNotificationService,
-                              SQSProducerService sqsProducerService) {
+                              ExceededAmountNotificationService exceededAmountNotificationService
+//                              SQSProducerService sqsProducerService
+    ) {
         this.messageSource = messageSource;
         this.categoryService = categoryService;
         this.exceededAmountNotificationService = exceededAmountNotificationService;
-        this.sqsProducerService = sqsProducerService;
+//        this.sqsProducerService = sqsProducerService;
     }
 
     @GetMapping("/hello")
@@ -57,7 +57,7 @@ public class CategoryController {
         Map<String, Object> headers = new HashMap<>();
         headers.put("Message-Type", "some");
         headers.put("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-        sqsProducerService.send("Hello", headers);
+//        sqsProducerService.send("Hello", headers);
 
         return messageSource.getMessage("morning.message", null, LocaleContextHolder.getLocale());
     }

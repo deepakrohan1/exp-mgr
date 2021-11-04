@@ -1,6 +1,7 @@
 package com.deepakrohan.expense.service;
 
 import com.deepakrohan.expense.dto.ExpenseDto;
+import com.deepakrohan.expense.dto.ExpenseResponseTotal;
 import com.deepakrohan.expense.entity.Expense;
 import com.deepakrohan.expense.mapper.ExpenseMapper;
 import com.deepakrohan.expense.repo.ExpenseRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
@@ -23,10 +25,19 @@ public class ExpenseService {
     private ExpenseRepository expenseRepository;
 
     @Cacheable(value = "itemCache")
-    public List<ExpenseDto> findAllExpenses() {
+    public ExpenseResponseTotal findAllExpenses() {
         log.info("Getting all expenses...");
         List<ExpenseDto> expenses = expenseMapper.expensesListToExpenseDto(expenseRepository.findAll());
-        return expenses;
+        BigDecimal sumOfExpenses = expenses
+                .stream()
+                .map(ExpenseDto::getAmountSpent)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        log.debug(String.valueOf(sumOfExpenses));
+        ExpenseResponseTotal expenseTotal = new ExpenseResponseTotal();
+        expenseTotal.setTotal(sumOfExpenses);
+        expenseTotal.setExpenses(expenses);
+
+        return expenseTotal;
     }
 
     public ExpenseDto saveExpense(ExpenseDto expenseDto) {
