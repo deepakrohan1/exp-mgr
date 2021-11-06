@@ -25,6 +25,9 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private CalculateServiceExpCheck calculateServiceExpCheck;
+
     private CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
     private ExpenseMapper expenseMapper = Mappers.getMapper(ExpenseMapper.class);
 
@@ -61,6 +64,7 @@ public class CategoryService {
 
         CategoryDto categoryDto =  categoryMapper.categoryToCategoryDto(category);
         categoryDto.setExpenses(exp);
+        calculateServiceExpCheck.calculateIfExpExceedsPrice(categoryDto);
         return categoryDto;
     }
 
@@ -69,4 +73,6 @@ public class CategoryService {
                 .map(Expense::getAmountSpent)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+
 }
