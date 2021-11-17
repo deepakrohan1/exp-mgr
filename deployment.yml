@@ -6,12 +6,12 @@ metadata:
     app: apache
     name: webserver
 spec:
-  replicas: 10
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 8
+      maxSurge: 1
+      maxUnavailable: 1
   selector: 
     matchLabels:
       app: apache
