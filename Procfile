@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/*.jar -Xmx384m -Xms384m -Xss512k
