@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/*.jar -Xmx384m -Xms384m -Xss512k
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/expense-manager-0.0.1-SNAPSHOT.jar -Xmx384m -Xms384m -Xss512k
